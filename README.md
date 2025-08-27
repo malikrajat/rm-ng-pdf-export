@@ -61,13 +61,9 @@
 
 ---
 
-## 🖼️ Demo / Screenshot / GIF
+## 🖼️ Live Demo
 
-> _Demo coming soon..._
-
-Placeholder:
-
-[ PDF Export ] ---> [ Rendered HTML Section ] ---> [ Downloaded as "report.pdf" ]
+> [See the implementation here](https://stackblitz.com/edit/stackblitz-starters-5rt3lrkz)
 
 ---
 
