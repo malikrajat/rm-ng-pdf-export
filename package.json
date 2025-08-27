@@ -1,0 +1,93 @@
+{
+  "name": "@codewithrajat/rm-ng-pdf-export",
+  "version": "1.0.0",
+  "description": "Angular library for exporting HTML content to PDF using html2canvas and pdf-lib",
+  "author": {
+    "name": "Rajat Malik",
+    "email": "mr.rajatmalik@gmail.com",
+    "url": "https://www.rajatmalik.dev/"
+  },
+  "contributors": [
+    {
+      "name": "Rajat Malik",
+      "email": "mr.rajatmalik@gmail.com"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Rajat Malik",
+      "email": "mr.rajatmalik@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/malikrajat/rm-ng-pdf-export#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malikrajat/rm-ng-pdf-export.git"
+  },
+  "bugs": {
+    "url": "https://github.com/malikrajat/rm-ng-pdf-export/issues",
+    "email": "mr.rajatmalik@gmail.com"
+  },
+  "keywords": [
+    "angular",
+    "pdf",
+    "export",
+    "html2canvas",
+    "pdf-lib",
+    "typescript",
+    "library",
+    "component",
+    "directive",
+    "html-to-pdf",
+    "pdf-generator",
+    "angular-library"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "pdf-lib": "^1.17.1",
+    "html2canvas": "^1.4.1"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/malikrajat"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "ng-update": {
+    "migrations": "./migrations/migration-collection.json",
+    "packageGroup": [
+      "rm-ng-pdf-export"
+    ]
+  },
+  "module": "fesm2022/codewithrajat-rm-ng-pdf-export.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./fesm2022/codewithrajat-rm-ng-pdf-export.mjs"
+    }
+  }
+}
