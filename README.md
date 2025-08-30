@@ -8,29 +8,9 @@
 
 ---
 
-## 📚 Table of Contents
-
-1. [Introduction](#introduction)
-2. [Features](#features)
-3. [Demo](#demo--screenshot--gif)
-4. [Installation](#installation-instructions)
-5. [Compatibility](#compatibility-matrix)
-6. [Usage](#usage)
-7. [Advanced Configuration](#advanced-configuration)
-8. [API Reference](#api-reference)
-9. [Tree-Shaking & Optimization](#tree-shaking-and-optimization)
-10. [Known Issues & Limitations](#known-issues--limitations)
-11. [Development Setup](#development-setup-for-contributors)
-12. [Changelog](#release-notes--changelog)
-13. [License](#license)
-14. [Author](#author--maintainer-info)
-15. [Credits](#credits--acknowledgements)
+`@codewithrajat/rm-ng-pdf-export` is a lightweight, flexible, and tree-shakable Angular library for generating and exporting high-quality PDFs from HTML content. Built with modern Angular (v14–v20), it seamlessly integrates with your application using services, directives, and components.
 
 ---
-
-## 📌 Introduction
-
-`rm-ng-pdf-export` is a lightweight, flexible, and tree-shakable Angular library for generating and exporting high-quality PDFs from HTML content. Built with modern Angular (v14–v20), it seamlessly integrates with your application using services, directives, and components.
 
 ### ✅ Solves
 
@@ -72,7 +52,7 @@
 Install via npm:
 
 ```bash
-  npm install rm-ng-pdf-export
+  npm install @codewithrajat/rm-ng-pdf-export
 ```
 
 📋 Peer Dependencies
@@ -115,7 +95,7 @@ Import providers in `main.ts` :
   // in case of adding in root
   import { bootstrapApplication } from '@angular/platform-browser';
   import { AppComponent } from './app/app.component';
-  import { PdfExportService, PDF_EXPORT_CONFIG } from 'rm-ng-pdf-export';
+  import { PdfExportService, PDF_EXPORT_CONFIG } from '@codewithrajat/rm-ng-pdf-export';
   
   bootstrapApplication(AppComponent, {
     providers: [
@@ -132,12 +112,12 @@ Import providers in `main.ts` :
   });
 ```
 
-Import providers in `component.ts` (if using standalone):
+Import providers in `component.ts` (if using standalone and do not want to import globally like main.ts):
 
 ```ts
   // in case of adding in component 
-  import { Component } from '@angular/core';
-  import { PdfExportService, PDF_EXPORT_CONFIG } from 'rm-ng-pdf-export';
+  import { Component, ElementRef, ViewChild } from '@angular/core';
+  import { PdfExportService, PDF_EXPORT_CONFIG } from '@codewithrajat/rm-ng-pdf-export';
   
   @Component({
     selector: 'app-report',
@@ -264,7 +244,7 @@ An `InjectionToken<PdfExportConfig>` for global config defaults.
 🛠 Development Setup (for contributors)
 
 ```bash
-  git clone https://github.com/malikrajat/rm-ng-pdf-export.git
+  git clone https://github.com/malikrajat/@codewithrajat/rm-ng-pdf-export.git
   cd rm-ng-pdf-export
   npm install
 ```
