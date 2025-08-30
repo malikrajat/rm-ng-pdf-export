@@ -1,6 +1,6 @@
 {
   "name": "@codewithrajat/rm-ng-pdf-export",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Angular library for exporting HTML content to PDF using html2canvas and pdf-lib",
   "author": {
     "name": "Rajat Malik",
