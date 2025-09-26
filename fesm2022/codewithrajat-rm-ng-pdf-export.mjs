@@ -36,10 +36,37 @@ class PdfExportService {
         const pageSize = config.pageSize || 'A4';
         const orientation = config.orientation || 'portrait';
         const pageDimensions = this._getPageDimensions(pageSize, orientation);
-        // Convert HTML element to canvas
-        const canvas = await html2canvas(element);
-        // Calculate scale factor to fit content width to page width
-        const scaleFactor = this._calculateScaleFactor(canvas.width, pageDimensions.width);
+        // Enhanced html2canvas options for high-quality PDF output
+        const html2canvasOptions = {
+            scale: 3, // Higher scale for crystal-clear resolution (3x)
+            useCORS: true, // Enable CORS for external images
+            allowTaint: false, // Prevent tainted canvas
+            backgroundColor: '#ffffff', // Ensure white background
+            logging: false, // Disable console logging
+            imageTimeout: 15000, // Timeout for image loading
+            removeContainer: true, // Clean up temporary containers
+            foreignObjectRendering: true, // Better text rendering
+            // High-quality rendering options
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+            letterRendering: true, // Better letter/font rendering
+            // Preserve margins and padding by capturing full element bounds
+            x: 0,
+            y: 0,
+            scrollX: 0,
+            scrollY: 0,
+            // Capture with original dimensions to preserve layout
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            // Additional quality options
+            dpi: 300, // High DPI for print quality
+            windowWidth: window.innerWidth,
+            windowHeight: window.innerHeight
+        };
+        // Convert HTML element to canvas with enhanced options
+        const canvas = await html2canvas(element, html2canvasOptions);
+        // Calculate scale factor with margin consideration
+        const scaleFactor = this._calculateScaleFactorWithMargins(canvas.width, pageDimensions.width, element);
         // Detect optimal break points in the content
         const breakPoints = this._detectContentBreakPoints(element, canvas, scaleFactor);
         // Calculate smart page breaks
@@ -52,14 +79,14 @@ class PdfExportService {
             pdf.setAuthor(config.metadata.author || '');
             pdf.setSubject(config.metadata.subject || '');
         }
-        // Generate each page with smart breaks
+        // Generate each page with smart breaks and improved quality
         for (let pageIndex = 0; pageIndex < pageBreaks.length; pageIndex++) {
             const currentBreak = pageBreaks[pageIndex];
             const nextBreak = pageBreaks[pageIndex + 1];
             // Create canvas for this page with smart bounds
             const pageCanvas = this._createSmartPageCanvas(canvas, currentBreak, nextBreak, scaleFactor, pageDimensions);
-            // Convert page canvas to image data
-            const pageImgData = pageCanvas.toDataURL('image/png');
+            // Convert page canvas to high-quality image data
+            const pageImgData = pageCanvas.toDataURL('image/png', 1.0); // Maximum quality (1.0)
             // Add page to PDF with configured dimensions
             const page = pdf.addPage([pageDimensions.width, pageDimensions.height]);
             // Embed the image and draw it on the page
@@ -128,6 +155,32 @@ class PdfExportService {
     _calculateScaleFactor(canvasWidth, pageWidth) {
         const contentWidthInPoints = this._widthPxToPt(canvasWidth);
         return pageWidth / contentWidthInPoints;
+    }
+    /**
+     * Calculate scale factor with margin preservation
+     */
+    _calculateScaleFactorWithMargins(canvasWidth, pageWidth, element) {
+        // Get element's computed style to understand margins and padding
+        const computedStyle = window.getComputedStyle(element);
+        const marginLeft = parseFloat(computedStyle.marginLeft) || 0;
+        const marginRight = parseFloat(computedStyle.marginRight) || 0;
+        const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+        const paddingRight = parseFloat(computedStyle.paddingRight) || 0;
+        // Calculate effective content width (excluding margins/padding if needed)
+        const totalHorizontalSpacing = marginLeft + marginRight + paddingLeft + paddingRight;
+        // Get the actual content width from the element
+        const elementWidth = element.offsetWidth;
+        const elementScrollWidth = element.scrollWidth;
+        // Use the larger width to ensure full content capture
+        const effectiveWidth = Math.max(elementWidth, elementScrollWidth, canvasWidth);
+        // Convert to points and calculate scale factor
+        const contentWidthInPoints = this._widthPxToPt(effectiveWidth);
+        // Leave some margin in PDF (10% on each side for better appearance)
+        const pdfMargin = pageWidth * 0.1; // 5% margin on each side
+        const availablePageWidth = pageWidth - pdfMargin;
+        const scaleFactor = availablePageWidth / contentWidthInPoints;
+        // Ensure scale factor doesn't exceed 1 for high-resolution displays
+        return Math.min(scaleFactor, 1);
     }
     /**
      * Calculate how many pages are needed for the given content height
@@ -254,20 +307,48 @@ class PdfExportService {
     _createSmartPageCanvas(sourceCanvas, pageStartY, pageEndY, scaleFactor, pageDimensions) {
         const pageCanvas = document.createElement('canvas');
         const ctx = pageCanvas.getContext('2d');
-        // Page dimensions in pixels (at 96 DPI)
+        // Ultra high resolution canvas for crystal-clear quality (4x)
+        const resolution = 4;
         const pageWidthPx = (pageDimensions.width * 96) / 72;
         const pageHeightPx = (pageDimensions.height * 96) / 72;
-        pageCanvas.width = pageWidthPx;
-        pageCanvas.height = pageHeightPx;
-        // Fill with white background
+        // Set canvas size with ultra high resolution
+        pageCanvas.width = pageWidthPx * resolution;
+        pageCanvas.height = pageHeightPx * resolution;
+        // Scale the canvas back down using CSS
+        pageCanvas.style.width = pageWidthPx + 'px';
+        pageCanvas.style.height = pageHeightPx + 'px';
+        // Scale the context to match the ultra high resolution
+        ctx.scale(resolution, resolution);
+        // Enable maximum quality image rendering
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        // Additional quality settings for crisp rendering
+        ctx.textBaseline = 'top';
         ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.fillRect(0, 0, pageWidthPx, pageHeightPx);
+        // Calculate margins for better appearance (5% on each side)
+        const marginX = pageWidthPx * 0.05;
+        const marginY = pageHeightPx * 0.05;
+        const availableWidth = pageWidthPx - (marginX * 2);
+        const availableHeight = pageHeightPx - (marginY * 2);
         // Calculate source height for this page
         const sourceHeight = pageEndY ? (pageEndY - pageStartY) : (sourceCanvas.height - pageStartY);
         if (sourceHeight > 0) {
-            // Draw the source canvas section onto the page canvas with scaling
+            // Calculate scaled dimensions while preserving aspect ratio
+            const sourceAspectRatio = sourceCanvas.width / sourceHeight;
+            let destWidth = availableWidth;
+            let destHeight = destWidth / sourceAspectRatio;
+            // If height exceeds available space, scale by height instead
+            if (destHeight > availableHeight) {
+                destHeight = availableHeight;
+                destWidth = destHeight * sourceAspectRatio;
+            }
+            // Center the content horizontally if it's smaller than available width
+            const offsetX = marginX + (availableWidth - destWidth) / 2;
+            const offsetY = marginY;
+            // Draw the source canvas section onto the page canvas with margins and high quality
             ctx.drawImage(sourceCanvas, 0, pageStartY, sourceCanvas.width, sourceHeight, // source (x, y, width, height)
-            0, 0, pageWidthPx, sourceHeight * scaleFactor // destination (x, y, width, height)
+            offsetX, offsetY, destWidth, destHeight // destination (x, y, width, height)
             );
         }
         return pageCanvas;
@@ -278,23 +359,50 @@ class PdfExportService {
     _createPageCanvas(sourceCanvas, pageIndex, scaleFactor, pageDimensions) {
         const pageCanvas = document.createElement('canvas');
         const ctx = pageCanvas.getContext('2d');
-        // Page dimensions in pixels (at 96 DPI)
+        // Higher resolution for better quality
+        const resolution = 2;
         const pageWidthPx = (pageDimensions.width * 96) / 72;
         const pageHeightPx = (pageDimensions.height * 96) / 72;
-        pageCanvas.width = pageWidthPx;
-        pageCanvas.height = pageHeightPx;
+        // Set canvas size with high resolution
+        pageCanvas.width = pageWidthPx * resolution;
+        pageCanvas.height = pageHeightPx * resolution;
+        // Scale the canvas back down using CSS
+        pageCanvas.style.width = pageWidthPx + 'px';
+        pageCanvas.style.height = pageHeightPx + 'px';
+        // Scale the context to match the device pixel ratio
+        ctx.scale(resolution, resolution);
+        // Enable high-quality image rendering
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
         // Fill with white background
         ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.fillRect(0, 0, pageWidthPx, pageHeightPx);
+        // Add margins for better appearance
+        const marginX = pageWidthPx * 0.05;
+        const marginY = pageHeightPx * 0.05;
+        const availableWidth = pageWidthPx - (marginX * 2);
+        const availableHeight = pageHeightPx - (marginY * 2);
         // Calculate the height of content that fits on one page in source canvas pixels
-        const contentHeightPerPage = pageHeightPx / scaleFactor;
+        const contentHeightPerPage = availableHeight / scaleFactor;
         // Calculate source coordinates for this page
         const sourceY = pageIndex * contentHeightPerPage;
         const sourceHeight = Math.min(contentHeightPerPage, sourceCanvas.height - sourceY);
         if (sourceHeight > 0) {
-            // Draw the source canvas section onto the page canvas with scaling
+            // Calculate scaled dimensions while preserving aspect ratio
+            const sourceAspectRatio = sourceCanvas.width / sourceHeight;
+            let destWidth = availableWidth;
+            let destHeight = destWidth / sourceAspectRatio;
+            // If height exceeds available space, scale by height instead
+            if (destHeight > availableHeight) {
+                destHeight = availableHeight;
+                destWidth = destHeight * sourceAspectRatio;
+            }
+            // Center the content
+            const offsetX = marginX + (availableWidth - destWidth) / 2;
+            const offsetY = marginY;
+            // Draw the source canvas section onto the page canvas with margins and high quality
             ctx.drawImage(sourceCanvas, 0, sourceY, sourceCanvas.width, sourceHeight, // source (x, y, width, height)
-            0, 0, pageWidthPx, sourceHeight * scaleFactor // destination (x, y, width, height)
+            offsetX, offsetY, destWidth, destHeight // destination (x, y, width, height)
             );
         }
         return pageCanvas;

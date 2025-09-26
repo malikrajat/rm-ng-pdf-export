@@ -44,6 +44,10 @@ declare class PdfExportService {
      */
     private _calculateScaleFactor;
     /**
+     * Calculate scale factor with margin preservation
+     */
+    private _calculateScaleFactorWithMargins;
+    /**
      * Calculate how many pages are needed for the given content height
      */
     private _calculateRequiredPages;
