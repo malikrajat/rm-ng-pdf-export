@@ -32,7 +32,7 @@
 
 <div align="center">
 
-  <img src="https://github.com/malikrajat/rm-ng-pdf-export/blob/main/assets/export-pdf.gif" alt="rm-ng-pdf-export Demo" width="800"/>
+  <img src="https://github.com/malikrajat/rm-ng-pdf-export/blob/master/assets/export-pdf.gif" alt="rm-ng-pdf-export Demo" width="800"/>
 
   <p><em>Export any HTML element to PDF with customizable settings!</em></p>
 
