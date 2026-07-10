@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { InjectionToken, PLATFORM_ID, Inject, Injectable, HostListener, Input, Directive, ElementRef, ContentChild, Component } from '@angular/core';
+import { InjectionToken, PLATFORM_ID, Inject, Injectable, HostListener, Input, Directive, ElementRef, ContentChild, ChangeDetectionStrategy, Component } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PDFDocument } from 'pdf-lib';
 import html2canvas from 'html2canvas';
@@ -407,10 +407,10 @@ class PdfExportService {
         }
         return pageCanvas;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportService, deps: [{ token: PDF_EXPORT_CONFIG }, { token: PLATFORM_ID }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportService });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService, deps: [{ token: PDF_EXPORT_CONFIG }, { token: PLATFORM_ID }], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService, decorators: [{
             type: Injectable
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,
@@ -445,10 +445,10 @@ class PdfExportDirective {
         };
         await this.svc.exportHtml(this.el.nativeElement, config);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportDirective, deps: [{ token: i0.ElementRef }, { token: PdfExportService }], target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.5", type: PdfExportDirective, isStandalone: true, selector: "[rmPdfExport]", inputs: { pageSize: "pageSize", orientation: "orientation", filename: "filename", openInNewTab: "openInNewTab", pdfConfig: "pdfConfig" }, host: { listeners: { "click": "onClick()" } }, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportDirective, deps: [{ token: i0.ElementRef }, { token: PdfExportService }], target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "22.0.2", type: PdfExportDirective, isStandalone: true, selector: "[rmPdfExport]", inputs: { pageSize: "pageSize", orientation: "orientation", filename: "filename", openInNewTab: "openInNewTab", pdfConfig: "pdfConfig" }, host: { listeners: { "click": "onClick()" } }, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportDirective, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportDirective, decorators: [{
             type: Directive,
             args: [{
                     selector: '[rmPdfExport]',
@@ -493,13 +493,14 @@ class PdfExportComponent {
         };
         await this.svc.exportHtml(this.content.nativeElement, config);
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportComponent, deps: [{ token: PdfExportService }], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "20.0.5", type: PdfExportComponent, isStandalone: true, selector: "rm-pdf-export", inputs: { pageSize: "pageSize", orientation: "orientation", filename: "filename", openInNewTab: "openInNewTab", pdfConfig: "pdfConfig" }, queries: [{ propertyName: "content", first: true, predicate: ["pdfContent"], descendants: true, read: ElementRef, static: true }], ngImport: i0, template: `<ng-content></ng-content><button (click)="export()">Export PDF</button>`, isInline: true });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportComponent, deps: [{ token: PdfExportService }], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "22.0.2", type: PdfExportComponent, isStandalone: true, selector: "rm-pdf-export", inputs: { pageSize: "pageSize", orientation: "orientation", filename: "filename", openInNewTab: "openInNewTab", pdfConfig: "pdfConfig" }, queries: [{ propertyName: "content", first: true, predicate: ["pdfContent"], descendants: true, read: ElementRef, static: true }], ngImport: i0, template: `<ng-content></ng-content><button (click)="export()">Export PDF</button>`, isInline: true, changeDetection: i0.ChangeDetectionStrategy.Eager });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: PdfExportComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportComponent, decorators: [{
             type: Component,
             args: [{
                     selector: 'rm-pdf-export',
+                    changeDetection: ChangeDetectionStrategy.Eager,
                     template: `<ng-content></ng-content><button (click)="export()">Export PDF</button>`
                 }]
         }], ctorParameters: () => [{ type: PdfExportService }], propDecorators: { content: [{
