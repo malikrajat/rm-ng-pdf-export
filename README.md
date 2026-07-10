@@ -93,7 +93,7 @@
       <sub>Try all features live in your browser</sub>
     </td>
     <td align="center" width="50%">
-      <a href="https://github.com/malikrajat/rm-ng-pdf-export/tree/main/examples" target="_blank">
+      <a href="https://github.com/malikrajat/rm-ng-pdf-export/tree/master/examples" target="_blank">
         <img src="https://img.shields.io/badge/Code_Examples-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Examples"/>
       </a>
       <br/><br/>
@@ -338,7 +338,7 @@ A: Yes. The library is MIT licensed and can be used in personal and commercial p
 [![npm version](https://img.shields.io/npm/v/@codewithrajat/rm-ng-pdf-export.svg)](https://www.npmjs.com/package/@codewithrajat/rm-ng-pdf-export)
 [![GitHub issues](https://img.shields.io/github/issues/malikrajat/rm-ng-pdf-export.svg)](https://github.com/malikrajat/rm-ng-pdf-export/issues)
 [![GitHub stars](https://img.shields.io/github/stars/malikrajat/rm-ng-pdf-export.svg?style=social)](https://github.com/malikrajat/rm-ng-pdf-export/stargazers)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/malikrajat/rm-ng-pdf-export/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/malikrajat/rm-ng-pdf-export/blob/master/LICENSE)
 
 ---
 
@@ -393,7 +393,7 @@ Need assistance? We're here to help!
 - [GitHub Repository](https://github.com/malikrajat/rm-ng-pdf-export)
 - [npm Package](https://www.npmjs.com/package/@codewithrajat/rm-ng-pdf-export)
 - [Live Demo](https://stackblitz.com/edit/stackblitz-starters-5rt3lrkz)
-- [Changelog](https://github.com/malikrajat/rm-ng-pdf-export/blob/main/CHANGELOG.md)
+- [Changelog](https://github.com/malikrajat/rm-ng-pdf-export/blob/master/CHANGELOG.md)
 
 ### Community
 
