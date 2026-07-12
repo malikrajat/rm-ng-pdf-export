@@ -1,6 +1,6 @@
 {
   "name": "@codewithrajat/rm-ng-pdf-export",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Angular PDF export library for converting HTML, DOM content, reports, dashboards, invoices, tables, and charts into downloadable PDFs with smart page breaks, A4/letter sizing, orientation, metadata, and high-quality rendering",
   "keywords": [
     "angular",

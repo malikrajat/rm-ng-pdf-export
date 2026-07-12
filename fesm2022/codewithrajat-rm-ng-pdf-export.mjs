@@ -408,13 +408,10 @@ class PdfExportService {
         return pageCanvas;
     }
     static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService, deps: [{ token: PDF_EXPORT_CONFIG }, { token: PLATFORM_ID }], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService, providedIn: 'root' });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService });
 }
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.0.2", ngImport: i0, type: PdfExportService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root'
-                }]
+            type: Injectable
         }], ctorParameters: () => [{ type: undefined, decorators: [{
                     type: Inject,
                     args: [PDF_EXPORT_CONFIG]
