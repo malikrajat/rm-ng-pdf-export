@@ -13,6 +13,30 @@ The library supports advanced behavior through a configuration object passed to 
 
 Example:
 
+### main.ts Configuration
+
+```typescript
+import { PDF_EXPORT_CONFIG, PdfExportConfig } from '@codewithrajat/rm-ng-pdf-export';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+      {
+      provide: PDF_EXPORT_CONFIG,
+      useValue: {
+        pageSize: 'A4',
+        orientation: 'portrait',
+        filename: 'default.pdf',
+        openInNewTab: false,
+      } as PdfExportConfig,
+    }
+  ]
+};
+
+```
+
+### Set up Component 
+
 ```ts
 this.pdfExportService.export(element, {
   fileName: 'report.pdf',

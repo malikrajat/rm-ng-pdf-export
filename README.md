@@ -135,6 +135,30 @@ npm install @codewithrajat/rm-ng-pdf-export
 
 ### Basic Usage
 
+#### Set up Root Config
+
+```typescript
+import { PDF_EXPORT_CONFIG, PdfExportConfig } from '@codewithrajat/rm-ng-pdf-export';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+      {
+      provide: PDF_EXPORT_CONFIG,
+      useValue: {
+        pageSize: 'A4',
+        orientation: 'portrait',
+        filename: 'default.pdf',
+        openInNewTab: false,
+      } as PdfExportConfig,
+    }
+  ]
+};
+
+```
+
+#### main.ts Configuration
+
 ```typescript
 import { PdfExportService } from '@codewithrajat/rm-ng-pdf-export';
 
@@ -149,12 +173,15 @@ import { PdfExportService } from '@codewithrajat/rm-ng-pdf-export';
   `
 })
 export class ExampleComponent {
-  @ViewChild('content') content!: ElementRef;
-
-  constructor(private pdfService: PdfExportService) {}
+  private readonly pdfService: PdfExportService  = inject(PdfExportService)
+  content = viewChild<ElementRef<HTMLDivElement>>('content');
 
   exportPdf() {
-    this.pdfService.exportHtml(this.content.nativeElement, {
+    const contentEl = this.content()?.nativeElement;
+    if (!contentEl) {
+      return;
+    }
+    this.pdfService.exportHtml(contentEl, {
       filename: 'my-document.pdf',
       pageSize: 'A4',
       orientation: 'portrait'
