@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2026-07-11
+
+### Minor Release
+
+#### Changed
+- **Service Provider Scope**: Updated `PdfExportService` to use `providedIn: 'root'` instead of the bare `@Injectable()` decorator, enabling Angular's tree-shakable singleton service pattern.
+- **Dependency Injection**: The service is now automatically registered as an application-wide singleton, removing the need for manual provider declarations in modules or component arrays.
+- **Version Bump**: Library version incremented from `3.0.0` to `3.1.0` in both root and library `package.json` files.
+
+#### Fixed
+- **Tree-Shaking Optimization**: Ensured the service remains tree-shakable while being globally available, reducing bundle size for applications that don't use the service.
+- **Standalone Component Compatibility**: Improved out-of-the-box compatibility with Angular standalone components by removing the requirement to declare the service in the `providers` array.
+
+---
+
 ## [3.0.0] - 2026-07-10
 
 ### Major Release
