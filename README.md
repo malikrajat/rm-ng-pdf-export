@@ -135,7 +135,7 @@ npm install @codewithrajat/rm-ng-pdf-export
 
 ### Basic Usage
 
-#### Set up Root Config
+####  main.ts Configuration
 
 ```typescript
 import { PDF_EXPORT_CONFIG, PdfExportConfig } from '@codewithrajat/rm-ng-pdf-export';
@@ -157,7 +157,7 @@ export const appConfig: ApplicationConfig = {
 
 ```
 
-#### main.ts Configuration
+#### Set up component 
 
 ```typescript
 import { PdfExportService } from '@codewithrajat/rm-ng-pdf-export';
