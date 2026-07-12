@@ -130,13 +130,13 @@
 ### Installation
 
 ```bash
-npm install rm-ng-pdf-export
+npm install @codewithrajat/rm-ng-pdf-export
 ```
 
 ### Basic Usage
 
 ```typescript
-import { PdfExportService } from 'rm-ng-pdf-export';
+import { PdfExportService } from '@codewithrajat/rm-ng-pdf-export';
 
 @Component({
   selector: 'app-example',
