@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2026-07-12
+
+### Minor Release
+
+#### Added
+- **Global Configuration Support**: Introduced `PDF_EXPORT_CONFIG` injection token for app-wide default PDF export settings.
+- **Advanced Configuration Documentation**: Added dedicated `docs/ADVANCED_CONFIGURATION.md` guide for root-level setup.
+- **Angular 22 Peer Support**: Extended peer dependency range to include `@22.0.0`.
+
+#### Changed
+- **Package Name**: Renamed published package from `rm-ng-pdf-export` to `@codewithrajat/rm-ng-pdf-export`.
+- **Service Provider Scope**: Changed `PdfExportService` back to bare `@Injectable()` to support manual provider registration via the new configuration token.
+- **Documentation**: Updated README and docs to use modern Angular patterns (`inject`, `viewChild`) for component examples.
+- **Version Bump**: Library version incremented from `3.1.0` to `3.2.0` in both root and library `package.json` files.
+
+#### Fixed
+- **Configuration Injection**: Resolved global configuration propagation by introducing typed injection token setup in application providers.
+
+---
+
 ## [3.1.0] - 2026-07-11
 
 ### Minor Release
